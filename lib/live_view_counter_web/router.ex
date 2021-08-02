@@ -8,6 +8,7 @@ defmodule LiveViewCounterWeb.Router do
     plug :put_root_layout, {LiveViewCounterWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Geometrics.Plug.OpenTelemetry
   end
 
   pipeline :api do
@@ -16,7 +17,6 @@ defmodule LiveViewCounterWeb.Router do
 
   scope "/", LiveViewCounterWeb do
     pipe_through :browser
-    
     live("/", Counter)
   end
 

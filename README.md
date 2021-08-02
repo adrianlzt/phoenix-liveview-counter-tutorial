@@ -1,3 +1,29 @@
+# OpenTelemetry tracing
+This app has been modified to add tracing with OpenTelemtry using the library [Geometrics](https://github.com/geometerio/geometrics).
+
+To test this app, first start the Jaeger backend+UI and OpenTelemetry collector:
+```
+cd otel
+bash jaeger.sh
+bash otel-collector.sh
+```
+
+Once running, start the phoenix server:
+```
+mix phx.server
+```
+
+Navigate to the [application](http://127.0.0.1:4000/) and click a few times in the buttons:
+
+Then go to the [Jaeger UI](http://127.0.0.1:16686/search), select one of the services and see the traces.
+
+![Jaeger UI traces](screenshots/img-2021-08-02-104248.png?raw=true "Traces captured seen in Jaeger UI")
+
+![Jaeger UI liveview socket conn](screenshots/img-2021-08-02-104311.png?raw=true "Frontend+backend traces connecting to LiveView socket")
+
+![Jaeger UI decrement call](screenshots/img-2021-08-02-104332.png?raw=true "Backend traces handling call to decrement")
+
+
 <div align="center">
 
 # Phoenix LiveView Counter Tutorial

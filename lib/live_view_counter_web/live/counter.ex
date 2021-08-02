@@ -4,6 +4,8 @@ defmodule LiveViewCounterWeb.Counter do
   alias Phoenix.PubSub
   alias LiveViewCounter.Presence
 
+  require OpenTelemetry.Tracer
+
   @topic Count.topic
   @presence_topic "presence"
 
@@ -21,10 +23,18 @@ defmodule LiveViewCounterWeb.Counter do
   end
 
   def handle_event("inc", _, socket) do
+    # This is an example of adding a custom span to your application.
+    OpenTelemetry.Tracer.with_span "handle event increment" do
+      Process.sleep(100)
+    end
     {:noreply, assign(socket, :val, Count.incr())}
   end
 
   def handle_event("dec", _, socket) do
+    # This is an example of adding a custom span to your application.
+    OpenTelemetry.Tracer.with_span "handle event decrement" do
+      Process.sleep(200)
+    end
     {:noreply, assign(socket, :val, Count.decr())}
   end
 

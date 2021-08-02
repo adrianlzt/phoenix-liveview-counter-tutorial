@@ -7,6 +7,7 @@ defmodule LiveViewCounter.Application do
 
   def start(_type, _args) do
     children = [
+      Geometrics.OpenTelemetry.Handler,
       # Start the App State
       LiveViewCounter.Count,
       # Start the Telemetry supervisor

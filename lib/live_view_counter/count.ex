@@ -3,6 +3,8 @@ defmodule LiveViewCounter.Count do
 
   alias Phoenix.PubSub
 
+  require OpenTelemetry.Tracer
+
   @name :count_server
 
   @start_value 0
@@ -16,11 +18,17 @@ defmodule LiveViewCounter.Count do
   end
 
   def incr() do
-    GenServer.call @name, :incr
+    OpenTelemetry.Tracer.with_span "incr func" do
+      Process.sleep(50)
+      GenServer.call @name, :incr
+    end
   end
 
   def decr() do
-    GenServer.call @name, :decr
+    OpenTelemetry.Tracer.with_span "decr func" do
+      Process.sleep(50)
+      GenServer.call @name, :decr
+    end
   end
 
   def current() do
